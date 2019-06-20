@@ -9,35 +9,34 @@ int main(){
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 
-	map <string, int> score;
-	int mayor = 0;
-	int games;
-	string won;
 
-	cin >> games;
-	string team;
+	string players;
 
-	for (int i = 0; i < games; ++i){
+	cin >> players;
+
+	int same = 1;
+	bool danger = false;
+
+	for (int i = 1; i < players.size(); ++i){
 		
-		cin >> team;
-
-		if(score.count(team))
-			score[team]++;
-		else
-			score[team] = 1;
-
-	}
-
-	map <string, int >::iterator i;
-	for (i = score.begin(); i != score.end() ; ++i)
-	{
-		if(i -> second > mayor){
-			mayor = i-> second;
-			won = i -> first;
+		if(players[i] == players[i-1]){
+			same++;
+			if(same == 7){
+				danger = true;
+				break;
+			}
+		}
+		else{
+			same = 1;
 		}
 	}
 
-	cout << won <<'\n';
+	if(danger)
+		cout << "YES\n";
+	else
+		cout << "NO\n";
 
 	return 0;
+
 }
+
