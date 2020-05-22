@@ -1,47 +1,61 @@
-/*B. Letter*/
+/*B - Letter*/
 
-#include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 int main(){
 
-	string head;
-	string letter;
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
 
-	getline(cin, head);
-	getline(cin, letter);
+	int rows;
+	int col;
 
-	vector <int> have(255);
-	vector <int> need(255);
+	cin >> rows >> col;
 
-	int pos;
+	int left = -1;
+	int right = -1;
+	int up = -1;
+	int down = -1;
 
-	for (int i = 0; i < head.size(); ++i){
-		
-		pos = head[i];
-		have[pos]++;
-	}
+	vector <vector <char> > mat(rows, vector <char> (col));
 
-	for (int i = 0; i < letter.size(); ++i)
+	for (int i = 0; i < rows; ++i)
 	{
-		pos = letter[i];
-		need[pos]++;
-	}
 
-	bool can = true;
-
-	for (int i = 0; i < 255; ++i){
-		if(have[i] < need[i] and i != 32){
-			can = false;	
+		for (int j = 0; j < col; ++j)
+		{
+			cin >> mat[i][j];
+			if(mat[i][j] == '*'){
+				if(left == -1){
+					left = j;
+					right = j;
+					up = i;
+					down = i;
+				}
+				else{
+					left = min(left, j);
+					right = max(right, j);
+					up = min(i, up);
+					down = max(down, i);
+				}
+			}
 		}
+
 	}
 
-	if(can)
-		cout << "YES\n";
-	else
-		cout << "NO\n";
+	for (int i = up; i <= down; ++i)
+	{
+
+		for (int j = left; j <= right; ++j)
+		{
+			cout << mat[i][j];
+		}
+		cout << '\n';
+
+	}
+
 
 	return 0;
 }
